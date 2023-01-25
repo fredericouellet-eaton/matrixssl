@@ -1,0 +1,1 @@
+make clean; CFLAGS="-DNO_MULTITHREADING=1 -DMATRIXSSL_NO_AESNI=1" make libs -j && sudo make install

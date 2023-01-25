@@ -330,7 +330,7 @@
 #  endif
 # endif /* USE_OPENSSL_CRYPTO */
 
-# if defined(__AES__) && !defined(USE_FIPS_CRYPTO)
+# if defined(__AES__) && !defined(USE_FIPS_CRYPTO) && !defined(MATRIXSSL_NO_AESNI)
 /******************************************************************************/
 /**
     This is defined if the -maes compiler flag is used on Intel platforms.
@@ -423,4 +423,3 @@
 #endif   /* _h_PS_CRYPTOLAYER */
 
 /******************************************************************************/
-
