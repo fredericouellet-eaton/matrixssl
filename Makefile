@@ -48,6 +48,8 @@
 #
 #
 
+PREFIX ?= /usr/local
+MATRIXSSL_INSTALL_LIB_DIR ?= lib
 default: all
 util: all-utils
 
@@ -267,6 +269,13 @@ clean:
 	if [ -e ext/psext-example ]; then $(MAKE) clean --directory=ext/psext-example;fi
 
 clobber: clean clean-config
+
+install:
+	install -d ${DESTDIR}${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}/matrixssl/cmake
+	install -m 0644 cmake/matrixssl-config*.cmake ${DESTDIR}${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}/matrixssl/cmake
+	$(MAKE) DESTDIR=${DESTDIR} PREFIX=${PREFIX} MATRIXSSL_INSTALL_LIB_DIR=${MATRIXSSL_INSTALL_LIB_DIR} install --directory=core
+	$(MAKE) DESTDIR=${DESTDIR} PREFIX=${PREFIX} MATRIXSSL_INSTALL_LIB_DIR=${MATRIXSSL_INSTALL_LIB_DIR} install --directory=crypto
+	$(MAKE) DESTDIR=${DESTDIR} PREFIX=${PREFIX} MATRIXSSL_INSTALL_LIB_DIR=${MATRIXSSL_INSTALL_LIB_DIR} install --directory=matrixssl
 
 # Always use common.mk for possible additional rules and processing.
 COMMON_MK_NO_TARGETS:=1

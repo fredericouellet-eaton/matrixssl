@@ -93,3 +93,11 @@ else
 include Makefile
 
 endif
+
+install: $(compile)
+	mkdir -p $(DESTDIR)${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}
+	mkdir -p $(DESTDIR)${PREFIX}/include/matrixssl
+	install -m 0755 ${noinst_LIBRARIES} $(DESTDIR)${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}
+	install -m 0664 config/coreConfig.h $(DESTDIR)${PREFIX}/include/matrixssl
+	find ./include/ -name "*.h" | sed 's/.\/include\///' | while read h ; do install -m 0664 -D ./include/$$h $(DESTDIR)${PREFIX}/include/matrixssl/$$h ; done
+	find ./osdep/include/ -name "*.h" | sed 's/.\/osdep\/include\///' | while read h ; do install -m 0664 -D ./osdep/include/$$h $(DESTDIR)${PREFIX}/include/matrixssl/$$h ; done

@@ -265,3 +265,9 @@ clean:
 CPPFLAGS_EXTRACT_MACROS=-dM
 parse-config:
 	[ -f cryptoConfig.h ] && echo '#include "cryptoConfig.h"' | $(CC) $(CFLAGS) $(CPPFLAGS_EXTRACT_MACROS) -E -x c - || exit 0
+
+install: $(compile)
+	install -d $(DESTDIR)${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}
+	install -d $(DESTDIR)${PREFIX}/include/matrixssl
+	install -m 0755 ${STATIC} $(DESTDIR)${PREFIX}/${MATRIXSSL_INSTALL_LIB_DIR}
+	find . -name "*.h" -not -path "./test/*" -exec install -m 0644 -D {} $(DESTDIR)${PREFIX}/include/matrixssl/{} \;
